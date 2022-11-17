@@ -1,0 +1,22 @@
+﻿apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestore
+auth:
+  secretStore: strongbox
+spec:
+  type: state.azure.cosmosdb
+  version: v1
+  metadata:
+  - name: url
+    secretKeyRef:
+      key: url
+      name: url
+  - name: masterKey
+    secretKeyRef:
+      key: key
+      name: key
+  - name: database
+    value: StateStore
+  - name: collection
+    value: StateStoreValues

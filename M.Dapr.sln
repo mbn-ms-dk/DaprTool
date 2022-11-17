@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M.Dapr.Tool", "M.Dapr.Tool\M.Dapr.Tool.csproj", "{1591C75E-2C36-46F7-B92A-CAE18EABB070}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demos", "demos\demos.csproj", "{CDC708AF-19C5-4250-9FD0-EE7EF96FFCBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1591C75E-2C36-46F7-B92A-CAE18EABB070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1591C75E-2C36-46F7-B92A-CAE18EABB070}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1591C75E-2C36-46F7-B92A-CAE18EABB070}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1591C75E-2C36-46F7-B92A-CAE18EABB070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDC708AF-19C5-4250-9FD0-EE7EF96FFCBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDC708AF-19C5-4250-9FD0-EE7EF96FFCBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDC708AF-19C5-4250-9FD0-EE7EF96FFCBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDC708AF-19C5-4250-9FD0-EE7EF96FFCBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <!-- tool-->
+	  <PackAsTool>true</PackAsTool>
+	  <ToolCommandName>demos</ToolCommandName>
+	  <PackageOutputPath>./nupkg</PackageOutputPath>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="components\azure\secretstores.local.file.yaml" />
+    <None Remove="components\azure\state.azure.cosmosdb.yaml" />
+    <None Remove="components\local\state.redis.yaml" />
+    <None Remove="Infra\Demo.ps1" />
+    <None Remove="Infra\deploy\main.bicep" />
+    <None Remove="Infra\deploy\statestore.bicep" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="components\azure\secretstores.local.file.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\azure\state.azure.cosmosdb.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\local\state.redis.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Infra\DeployAzureInfrastructure.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Infra\Demo.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Infra\deploy\main.bicep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Infra\deploy\statestore.bicep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.0" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.3.0" />
+    <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.40" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="nupkg\" />
+  </ItemGroup>
+
+</Project>

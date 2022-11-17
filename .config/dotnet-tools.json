@@ -2,8 +2,8 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "m.dapr.tool": {
-      "version": "1.0.0",
+    "demos": {
+      "version": "0.7.2",
       "commands": [
         "bob"
       ]

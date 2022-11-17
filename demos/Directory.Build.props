@@ -1,11 +1,11 @@
 ﻿<Project>
 	<PropertyGroup>
-		<Version>1.0.0</Version>
+		<Version>0.7.2</Version>
     <Authors>minielsen</Authors>
     <Copyright>minielsen</Copyright>
     <Company>minielsen</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/mbn-dk/CmdCrawlerSpas</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/mbn-dk/CmdCrawlerSpas</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mbn-ms-dk/DaprTool</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mbn-ms-dk/DaprTool</RepositoryUrl>
 	</PropertyGroup>
 </Project>
