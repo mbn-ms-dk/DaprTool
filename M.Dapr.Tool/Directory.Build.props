@@ -1,0 +1,11 @@
+﻿<Project>
+	<PropertyGroup>
+		<Version>1.0.0</Version>
+    <Authors>minielsen</Authors>
+    <Copyright>minielsen</Copyright>
+    <Company>minielsen</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/mbn-dk/CmdCrawlerSpas</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mbn-dk/CmdCrawlerSpas</RepositoryUrl>
+	</PropertyGroup>
+</Project>
