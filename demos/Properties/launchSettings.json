@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "demos": {
+      "commandName": "Project",
+      "commandLineArgs": "demos state -del"
+    }
+  }
+}

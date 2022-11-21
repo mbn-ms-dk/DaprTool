@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <!-- tool-->
-	  <PackAsTool>true</PackAsTool>
+	  <PackAsTool>false</PackAsTool>
 	  <ToolCommandName>demos</ToolCommandName>
 	  <PackageOutputPath>./nupkg</PackageOutputPath>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -14,34 +14,39 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="components\azure\secretstores.local.file.yaml" />
-    <None Remove="components\azure\state.azure.cosmosdb.yaml" />
-    <None Remove="components\local\state.redis.yaml" />
-    <None Remove="Infra\Demo.ps1" />
-    <None Remove="Infra\deploy\main.bicep" />
-    <None Remove="Infra\deploy\statestore.bicep" />
+    <None Remove="components\binding\azure\azurestorage.yaml" />
+    <None Remove="components\binding\azure\local_secrets.json" />
+    <None Remove="components\binding\azure\secretstores.local.file.yaml" />
+    <None Remove="components\binding\local\localstorage.yaml" />
+    <None Remove="components\state\azure\local_secrets.json" />
+    <None Remove="components\state\azure\secretstores.local.file.yaml" />
+    <None Remove="components\state\azure\state.azure.cosmosdb.yaml" />
+    <None Remove="components\state\local\state.redis.yaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="components\azure\secretstores.local.file.yaml">
+    <Content Include="components\binding\azure\local_secrets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\binding\azure\secretstores.local.file.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="components\azure\state.azure.cosmosdb.yaml">
+    <Content Include="components\binding\azure\azurestorage.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="components\local\state.redis.yaml">
+    <Content Include="components\binding\local\localstorage.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Infra\DeployAzureInfrastructure.ps1">
+    <Content Include="components\state\azure\local_secrets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\state\azure\secretstores.local.file.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Infra\Demo.ps1">
+    <Content Include="components\state\azure\state.azure.cosmosdb.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Infra\deploy\main.bicep">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Infra\deploy\statestore.bicep">
+    <Content Include="components\state\local\state.redis.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -50,6 +55,9 @@
     <PackageReference Include="Azure.Core" Version="1.26.0" />
     <PackageReference Include="Azure.Identity" Version="1.8.0" />
     <PackageReference Include="Azure.ResourceManager" Version="1.3.2" />
+    <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.1.0" />
+    <PackageReference Include="Azure.ResourceManager.Storage" Version="1.0.0" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.0" />
     <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.40" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
