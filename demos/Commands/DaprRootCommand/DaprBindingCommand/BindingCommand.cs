@@ -3,20 +3,15 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using demos.Models;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace demos.Commands.DaprBindingCommand
+namespace demos.Commands.DaprRootCommand.DaprBindingCommand
 {
-    public  class BindingRootCommand : Command
+    public class BindingCommand : Command
     {
-        public BindingRootCommand() : base("binding", "Dapr binding demo")
+        public BindingCommand() : base("binding", "Dapr binding demo")
         {
             var deployOption = new Option<bool>(
                name: "-deployOnly", description: "Create Azure environment (storageaccount)");
@@ -45,11 +40,12 @@ namespace demos.Commands.DaprBindingCommand
                 if (deploy)
                 {
                     Console.WriteLine("Deploying to Azure");
-                    sub = await Helpers.AzureHelpers.Authenticate();
+                    var setting = await Helpers.Utils.LoadConfiguration();
+                    sub = setting.CustomTenant ? await Helpers.AzureHelpers.Authenticate(setting.CustomTenantId) : await Helpers.AzureHelpers.Authenticate();
                     var rg = await Helpers.AzureHelpers.CreateResourceGroup(sub, rgName);
                     await CreateStorageAccount(rg);
                 }
-                else if(delete)
+                else if (delete)
                 {
                     await Helpers.AzureHelpers.DeleteResourceGroup(rgName);
                 }
@@ -103,11 +99,11 @@ namespace demos.Commands.DaprBindingCommand
             Console.WriteLine("Creating Creating components/binding/azure/local_secrets.json");
 
             var keys = stor.Value.GetKeys().AsPages();
-           
+
             var k = keys.FirstOrDefault().Values.FirstOrDefault();
             var options = new JsonSerializerOptions { WriteIndented = true };
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping; //to allow '+' signs in key
-            var json = JsonSerializer.Serialize<SecretJsonBinding>(new SecretJsonBinding()
+            var json = JsonSerializer.Serialize(new SecretJsonBinding()
             {
                 Key = k.Value,
                 Account = stor.Value.Data.Name

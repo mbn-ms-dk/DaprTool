@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="components\appl\settings.json" />
     <None Remove="components\binding\azure\azurestorage.yaml" />
     <None Remove="components\binding\azure\local_secrets.json" />
     <None Remove="components\binding\azure\secretstores.local.file.yaml" />
@@ -25,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="components\appl\settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="components\binding\azure\local_secrets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
