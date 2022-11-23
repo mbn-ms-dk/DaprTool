@@ -8,7 +8,7 @@ using System.CommandLine;
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace demos.Commands.DaprRootCommand.DaprStatestoreCommand
+namespace demos.Commands.DaprRootCommand.DaprStatestoreCommands
 {
     public class StatestoreCommand : Command
     {
@@ -19,7 +19,7 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommand
             AddOption(deployOption);
 
             var deleteOption = new Option<bool>(
-                name: "--del", "Deletes resources used with this demo");
+                name: "--delete", "Deletes resources used with this demo");
             AddOption(deleteOption);
 
             var demoOption = new Option<bool>(
@@ -40,16 +40,6 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommand
 
                 if (deploy)
                 {
-                    //await AnsiConsole.Status()
-                    //    .Spinner(Spinner.Known.Dots2)
-                    //    .SpinnerStyle(Style.Parse("blue"))
-                    //    .StartAsync("Deploying to Azure...", async ctx =>
-                    //       {
-                    //           var setting = await Helpers.Utils.LoadConfiguration();
-                    //           sub = setting.CustomTenant ? await Helpers.AzureHelpers.Authenticate(setting.CustomTenantId) : await Helpers.AzureHelpers.Authenticate();
-                    //           var rg = await Helpers.AzureHelpers.CreateResourceGroup(sub, rgName);
-                    //           await CreateCosmosDb(rg);
-                    //       });
                     AnsiConsole.MarkupLine("[blue]RDeploying to Azure[/]");
                     var setting = await Helpers.Utils.LoadConfiguration();
                     sub = setting.CustomTenant ? await Helpers.AzureHelpers.Authenticate(setting.CustomTenantId) : await Helpers.AzureHelpers.Authenticate();
@@ -72,27 +62,37 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommand
                     }
                     else
                     {
-                        AnsiConsole.Markup("[blue]Running demo local[/]");
+                        AnsiConsole.MarkupLine("[green]Running demo local[/]");
                         await StartDemo("local");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                AnsiConsole.WriteException(ex);
             }
         }
 
-        private Task StartDemo(string env)
+        private async Task StartDemo(string env)
         {
-            var cmd = $"dapr run --app-id {env} --dapr-http-port 3500 --components-path {AppDomain.CurrentDomain.BaseDirectory}components/state/{env}";
-            var procStartInfo = new ProcessStartInfo("cmd", "/K " + cmd);
-            procStartInfo.RedirectStandardOutput = false;
-            procStartInfo.UseShellExecute = false;
-            procStartInfo.CreateNoWindow = false;
-            using var proc = Process.Start(procStartInfo);
-            proc.WaitForExit();
-            return Task.CompletedTask;
+            var cmdDapr = $"dapr run --app-id {env} --dapr-http-port 3500 --components-path ./components/state/{env}";
+
+            var cmd = $"wt -w 0 split-pane cmd /K \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
+            var procStartInfo = new ProcessStartInfo("cmd")
+            {
+                Arguments = $"/K {cmd}",
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            var proc = new Process();
+            proc.StartInfo = procStartInfo;
+            proc.Start();
+            //await proc.StandardInput.WriteAsync(cmd);
+            await proc.StandardInput.FlushAsync();
+            proc.StandardInput.Close();
+            AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
         }
 
         private async Task CreateCosmosDb(ResourceGroupResource rgr)
@@ -123,18 +123,18 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommand
                                 Azure.WaitUntil.Completed,
                                 $"cdb{Helpers.Utils.GenerateRandomString(5)}demo",
                                 cdbAccContent);
-                            AnsiConsole.MarkupLine($"[green]Created {cdba.Value.Data.Name}[/]");
+                            AnsiConsole.MarkupLineInterpolated($"[green]Created CosmosDB Account:[/] [blue]{cdba.Value.Data.Name}[/]");
 
-                            AnsiConsole.Markup($"[green]Creating CosmosSQLDB[/]");
+                            AnsiConsole.MarkupLine($"[green]Creating CosmosSQLDB[/]");
                             var cdb = await cdba.Value.GetCosmosDBSqlDatabases().CreateOrUpdateAsync(
                             Azure.WaitUntil.Completed,
                             "StateStore",
                             new CosmosDBSqlDatabaseCreateOrUpdateContent(
                                 AzureLocation.WestEurope,
                                 new CosmosDBSqlDatabaseResourceInfo("StateStore")));
-                            AnsiConsole.MarkupLine($"[green]Created {cdb.Value.Data.Name}[/]");
+                            AnsiConsole.MarkupLineInterpolated($"[green]Created CosmosDBSQL:[/] [blue]{cdb.Value.Data.Name}[/]");
 
-                            AnsiConsole.Markup($"[green]Creating SQL Container[/]");
+                            AnsiConsole.MarkupLine($"[green]Creating SQL Container[/]");
                             var key = new CosmosDBContainerPartitionKey();
                             key.Paths.Add("/id");
                             var cdc = await cdb.Value.GetCosmosDBSqlContainers().CreateOrUpdateAsync(
@@ -146,21 +146,24 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommand
                                     {
                                         PartitionKey = key
                                     }));
-                            AnsiConsole.Markup($"[green]Created {cdc.Value.Data.Name}[/]");
+                            AnsiConsole.MarkupLineInterpolated($"[green]Created SQL Container:[/] [blue]{cdc.Value.Data.Name}[/]");
 
-                            AnsiConsole.Markup($"[green]Getting Cosmos Keys[/]");
+                            AnsiConsole.MarkupLine($"[green]Getting Cosmos Keys[/]");
                             var k = await cdba.Value.GetKeysAsync();
-                            AnsiConsole.Markup($"[green]Creating Creating components/state/azure/local_secrets.json[/]");
+                            AnsiConsole.MarkupLine($"[green]Creating components/state/azure/local_secrets.json[/]");
 
-                            var options = new JsonSerializerOptions { WriteIndented = true };
+                            var options = new JsonSerializerOptions 
+                            { 
+                                WriteIndented = true,
+                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping //to allow '+' signs in key
+                            };
                             var json = JsonSerializer.Serialize(new SecretJsonState()
                             {
                                 Url = cdba.Value.Data.DocumentEndpoint,
                                 Key = k.Value.PrimaryMasterKey
                             }, options);
-                            using var sw = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + "components/state/azure/local_secrets.json");
-                            sw.Write(json);
-                            AnsiConsole.Markup($"[green]Created components/state/azure/local_secrets.json[/]");
+                            await Helpers.Utils.SaveSecretsFile(Helpers.DaprType.State, json);
+                            AnsiConsole.MarkupLine($"[green]Created components/state/azure/local_secrets.json[/]");
                         });
         }
     }

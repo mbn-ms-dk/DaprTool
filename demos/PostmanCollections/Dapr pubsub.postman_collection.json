@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "d8876dcb-263f-4354-989a-8433cb35eb68",
+		"name": "Dapr pubsub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21016766"
+	},
+	"item": [
+		{
+			"name": "pubsub2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"orderId\":\"46\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/publish/pubsub2/neworder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"publish",
+						"pubsub2",
+						"neworder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pubsub1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\": \"45\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/publish/pubsub1/neworder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"publish",
+						"pubsub1",
+						"neworder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "app1 invoke",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3500/v1.0/invoke/app1/method/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"invoke",
+						"app1",
+						"method",
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -3,6 +3,8 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Spectre.Console;
+using System.Dynamic;
+using System.Runtime.InteropServices;
 
 namespace demos.Helpers
 {
@@ -50,20 +52,90 @@ namespace demos.Helpers
 
         public static async Task<SubscriptionResource> GetDefaultSubscription()
         {
+            var setting = await Helpers.Utils.LoadConfiguration();
+            if (setting.CustomTenant)
+                return await Authenticate(setting.CustomTenantId);
+
             return await Authenticate();
         }
 
-        public static void ListTenants()
+        public static async Task ListSubscriptions()
         {
+            var setting = await Helpers.Utils.LoadConfiguration();
+            ArmClient client = null;
+            SubscriptionCollection subs = null;
+            AnsiConsole.Status()
+                .Spinner(Spinner.Known.Moon)
+                .SpinnerStyle(Style.Parse("blue"))
+                .Start("Getting subscriptions", ctx =>
+                {
+
+                    if (setting.CustomTenant)
+                    {
+                        var credential = new AzureCliCredential(new AzureCliCredentialOptions()
+                        {
+                            TenantId = setting.CustomTenantId
+                        });
+                        AnsiConsole.MarkupLine("[green]Creating Client[/]");
+                        client = new ArmClient(credential);
+                        AnsiConsole.MarkupLine("[green]Client Created[/]");
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[green]Creating Client[/]");
+                        client = new ArmClient(new DefaultAzureCredential());
+                        AnsiConsole.MarkupLine("[green]Client Created[/]");
+                    }
+                    AnsiConsole.MarkupLine("[green]Fetching subscriptions[/]");
+                    subs = client.GetSubscriptions();
+                });
+            var table = new Table().LeftAligned();
+            table.Border(TableBorder.Rounded);
+            AnsiConsole.Live(table)
+            .Overflow(VerticalOverflow.Ellipsis)
+            .Start(ctx =>
+            {
+                table.AddColumn("[bold]Subscription Name[/]");
+                ctx.Refresh();
+
+                table.AddColumn("[bold]Subscription Id[/]");
+                ctx.Refresh();
+
+                foreach (var sub in subs)
+                {
+                    table.AddRow(new Markup($"[blue]{sub.Data.DisplayName}[/]"), new Markup($"[green]{sub.Id}[/]"));
+                    ctx.Refresh();
+                    Thread.Sleep(250);
+                }
+            });
+        }
+
+        public static async Task ListTenants()
+        {
+            var setting = await Helpers.Utils.LoadConfiguration();
+            ArmClient client = null;
             TenantCollection? tenants = null;
             AnsiConsole.Status()
                 .Spinner(Spinner.Known.Moon)
                 .SpinnerStyle(Style.Parse("blue"))
                 .Start("Retrieving tenants...", ctx =>
                 {
-                    AnsiConsole.MarkupLine("[green]Creating Client[/]");
-                    var client = new ArmClient(new DefaultAzureCredential());
-                    AnsiConsole.MarkupLine("[green]Client Created[/]");
+                    if (setting.CustomTenant)
+                    {
+                        var credential = new AzureCliCredential(new AzureCliCredentialOptions()
+                        {
+                            TenantId = setting.CustomTenantId
+                        });
+                        AnsiConsole.MarkupLine("[green]Creating Client[/]");
+                        client = new ArmClient(credential);
+                        AnsiConsole.MarkupLine("[green]Client Created[/]");
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[green]Creating Client[/]");
+                        client = new ArmClient(new DefaultAzureCredential());
+                        AnsiConsole.MarkupLine("[green]Client Created[/]");
+                    }
                     AnsiConsole.MarkupLine("[green]Getting tenants[/]");
                     tenants = client.GetTenants();
                 });
@@ -87,7 +159,6 @@ namespace demos.Helpers
                     Thread.Sleep(250);
                 }
             });
-            AnsiConsole.MarkupLine("[green]Getting tenants done[/]");
         }
 
         public static async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource sub, string rgName)
@@ -101,7 +172,7 @@ namespace demos.Helpers
                    AnsiConsole.MarkupLineInterpolated($"[green]Creating a resource group with name: {rgName}[/]");
                    var rgLro = await sub.GetResourceGroups().CreateOrUpdateAsync(Azure.WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestEurope));
                    resourceGroup = rgLro.Value;
-                   AnsiConsole.MarkupLineInterpolated($"[green]Created a resource group with id: {resourceGroup.Id}[/]");
+                   AnsiConsole.MarkupLineInterpolated($"[green]Created a resource group with id:[/] [blue] {resourceGroup.Id}[/]");
                });
             return resourceGroup;
         }
@@ -134,7 +205,7 @@ namespace demos.Helpers
                 {
                     AnsiConsole.MarkupLine($"[green]Fetching resourcegroup resource[/]");
                     var rg = await sub.GetResourceGroupAsync(rgName);
-                    AnsiConsole.MarkupLineInterpolated($"[green]Deleting resource group: {rgName}[/]");
+                    AnsiConsole.MarkupLineInterpolated($"[green]Deleting resource group:[/] [blue]{rgName}[/]");
                     await client.GetResourceGroupResource(rg.Value.Id).DeleteAsync(Azure.WaitUntil.Completed);
                     AnsiConsole.MarkupLine($"[green]Resource Group deleted[/]");
                 });

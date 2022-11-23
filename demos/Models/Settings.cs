@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace demos.Models
 {
-    public  class Settings
+    public record Settings
     {
+        [property: JsonPropertyName("isCustomTenant")] 
         public bool CustomTenant { get; set; }
+        [property: JsonPropertyName("customTenantId")] 
         public string CustomTenantId { get; set; }
-    }
+    };
+   
 }

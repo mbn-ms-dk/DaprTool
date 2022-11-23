@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "b2563f76-0d19-4923-8691-3ca04591ca14",
+		"name": "Dapr Binding",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21016766"
+	},
+	"item": [
+		{
+			"name": "Local Create file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"create\",\r\n    \"data\": \"Hello World\",\r\n    \"metadata\": {\r\n        \"fileName\": \"myTestFile.txt\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"create\",\r\n    \"data\": \"Hello World\",\r\n    \"metadata\": {\r\n        \"blobName\": \"myTestFile.txt\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List files",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"list\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Local Get Content",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"get\",\r\n    \"metadata\": {\r\n        \"fileName\": \"myTestFile.txt\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Content",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"get\",\r\n    \"metadata\": {\r\n        \"blobName\": \"myTestFile.txt\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Local Delete file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"delete\",\r\n    \"metadata\": {\r\n        \"fileName\": \"myTestFile.txt\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operation\": \"delete\",\r\n    \"metadata\": {\r\n        \"blobName\": \"myTestFile.txt\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3500/v1.0/bindings/files/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3500",
+					"path": [
+						"v1.0",
+						"bindings",
+						"files",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
