@@ -2,6 +2,7 @@
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using demos.Models;
 using Spectre.Console;
 using System.Dynamic;
 using System.Runtime.InteropServices;
@@ -23,31 +24,39 @@ namespace demos.Helpers
                     AnsiConsole.MarkupLine("[green]Getting Default subscription[/]");
                     sub = await client.GetDefaultSubscriptionAsync();
                 });
-            AnsiConsole.MarkupLineInterpolated($"[green]Default Subscription Name:[/] [blue]{sub.Data.DisplayName}[/]");
+            AnsiConsole.MarkupLineInterpolated($"[green]Default Subscription Name:[/] [blue]{sub?.Data.DisplayName}[/]");
             return sub;
         }
 
         public static async Task<SubscriptionResource> Authenticate(string tenantId)
         {
-            SubscriptionResource? sub = null; 
+            SubscriptionResource sub = null;
             //authenticate
             await AnsiConsole.Status()
                 .SpinnerStyle(Style.Parse("blue"))
                 .StartAsync("Authenticating...", async ctx =>
                 {
-                    AnsiConsole.MarkupLine("[green]Setting Tenant Id[/]");
-                    var credential = new AzureCliCredential(new AzureCliCredentialOptions()
-                    {
-                        TenantId = tenantId
-                    });
-                    AnsiConsole.MarkupLine("[green]Creating Client[/]");
-                    var client = new ArmClient(credential);
-                    AnsiConsole.MarkupLine("[green]Client Created[/]");
-                    AnsiConsole.MarkupLine("[green]Getting Default subscription[/]");
-                    sub = await client.GetDefaultSubscriptionAsync();
+                        AnsiConsole.MarkupLine("[green]Setting Tenant Id[/]");
+                        var credential = new AzureCliCredential(new AzureCliCredentialOptions()
+                        {
+                            TenantId = tenantId
+                        });
+                        AnsiConsole.MarkupLine("[green]Creating Client[/]");
+                        var client = new ArmClient(credential);
+                        AnsiConsole.MarkupLine("[green]Client Created[/]");
+                        AnsiConsole.MarkupLine("[green]Getting Default subscription[/]");
+                        sub = await client.GetDefaultSubscriptionAsync();
                 });
-            AnsiConsole.MarkupLineInterpolated($"[green]Default Subscription Name:[/] [blue]{sub.Data.DisplayName}[/]");
-            return sub;
+            AnsiConsole.MarkupLineInterpolated($"[green]Default Subscription Name:[/] [blue]{sub?.Data.DisplayName}[/]");
+            return sub!;
+        }
+
+        public static async Task<SubscriptionResource> GetSubscriptionBasedOnSettings(Settings settings)
+        {
+            if (settings.CustomTenant)
+                return await Authenticate(settings.CustomTenantId);
+            else
+                return await Authenticate();
         }
 
         public static async Task<SubscriptionResource> GetDefaultSubscription()
@@ -209,6 +218,7 @@ namespace demos.Helpers
                     await client.GetResourceGroupResource(rg.Value.Id).DeleteAsync(Azure.WaitUntil.Completed);
                     AnsiConsole.MarkupLine($"[green]Resource Group deleted[/]");
                 });
+            
         }
     }
 }

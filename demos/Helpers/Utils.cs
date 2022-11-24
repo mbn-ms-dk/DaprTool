@@ -1,4 +1,5 @@
 ﻿using demos.Models;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace demos.Helpers
             return mainIP;
         }
 
-        public static async Task<Settings?> LoadConfiguration()
+        public static async Task<Settings> LoadConfiguration()
         {
             if (!File.Exists(configPath))
             {
@@ -61,7 +62,8 @@ namespace demos.Helpers
                 await File.AppendAllTextAsync(configPath, json);
             }
             var setting = await File.ReadAllTextAsync(configPath);
-            return JsonSerializer.Deserialize<Settings>(setting);
+            var result = JsonSerializer.Deserialize<Settings>(setting);
+            return result == null ? new Settings() : result;
         }
 
         public static async Task SaveConfiguration(Settings settings)
@@ -84,6 +86,36 @@ namespace demos.Helpers
             using var fs = File.Create(path);
             fs.Close();
             await File.AppendAllTextAsync(path, json);
+        }
+
+        public static void ShowDemoDescription(DaprType daprType)
+        {
+            var txt = string.Empty;
+
+            if (daprType == DaprType.Binding)
+                txt = "The component in the components/binding/azure folder is configured to use Azure Blob Storage." + Environment.NewLine +
+                      "and the local component in the components/binding/local is configured to use local file storage." + Environment.NewLine +
+                      "The point to make comparing the files is that as long as the name of the component (in our demo 'files') does not change, " +
+                      "the code will work no matter what backing service is used.";
+            if (daprType == DaprType.State)
+                txt = "The components/state sub folder contains components for local and Azure." + Environment.NewLine +
+                       "These folders allow you to show the difference between the default components (local) and the components in the other folders." + Environment.NewLine + 
+                       "The point to make comparing the files is that as long as the name of the component does not change the code will work no matter what backing service is used.";
+            if (daprType == DaprType.Pubsub)
+                txt = @"This folder holds the components/pubsub/azure, components, deploy, and pubsub project folders." + Environment.NewLine +
+                    "The components/pubsub/azure and components folders are so you can show the difference between a local component" + Environment.NewLine +
+                    "and a component configured for the cloud. The component in the components/pubsub/azure folder is configured to use Azure Service Bus." + Environment.NewLine +
+                    "and the local component is configured to use Redis." + Environment.NewLine + 
+                    "The point to make comparing the files is that as long as the name of the component does not change the code will work no matter what backing service is used.";
+
+            var panel = new Panel(txt)
+            {
+                Header = new PanelHeader($"Dapr {daprType.ToString().ToLower()} demo"),
+                Border = BoxBorder.Rounded,
+                Padding = new Padding(2, 2, 2, 2),
+                BorderStyle = new Style(foreground: Color.Blue)
+            };
+            AnsiConsole.Write(panel);
         }
     }
 }

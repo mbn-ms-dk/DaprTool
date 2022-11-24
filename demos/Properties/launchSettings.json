@@ -2,7 +2,7 @@
   "profiles": {
     "demos": {
       "commandName": "Project",
-      "commandLineArgs": "demos dapr pubsub --azure"
+      "commandLineArgs": "demos dapr state --describe"
     }
   }
 }

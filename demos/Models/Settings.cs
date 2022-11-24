@@ -5,10 +5,10 @@ namespace demos.Models
 {
     public record Settings
     {
-        [property: JsonPropertyName("isCustomTenant")] 
+        [property: JsonPropertyName("isCustomTenant")]
         public bool CustomTenant { get; set; }
-        [property: JsonPropertyName("customTenantId")] 
-        public string CustomTenantId { get; set; }
-    };
+        [property: JsonPropertyName("customTenantId")]
+        public string? CustomTenantId { get; set; }
+    }
    
 }

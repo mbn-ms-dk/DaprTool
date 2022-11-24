@@ -24,11 +24,11 @@ namespace demos.Commands.AzureUserRootCommand
                 name: "--tenant", description: "Id of tenant to switch to");
             AddOption(switchTenantOption);
 
-            this.SetHandler(async (def, tenant, subs, swi) =>
-            { await AzureOperations(def, tenant, subs, swi); }, defSubOption, listTenantOption,listSubsOption, switchTenantOption);
+            this.SetHandler(async (def, tenant, subs, tenantId) =>
+            { await AzureOperations(def, tenant, subs, tenantId); }, defSubOption, listTenantOption,listSubsOption, switchTenantOption);
         }
 
-        private async Task AzureOperations(bool def, bool tenant,bool subs, string swi)
+        private async Task AzureOperations(bool def, bool tenant,bool subs, string tenantId)
         {
             if (def)
             {
@@ -42,12 +42,12 @@ namespace demos.Commands.AzureUserRootCommand
             {
                 await Helpers.AzureHelpers.ListSubscriptions();
             }
-            else if(!string.IsNullOrWhiteSpace(swi))
+            else if(!string.IsNullOrWhiteSpace(tenantId))
             {
-                var sub = await Helpers.AzureHelpers.Authenticate(swi);
+                var sub = await Helpers.AzureHelpers.Authenticate(tenantId);
                 var settings = await Helpers.Utils.LoadConfiguration();
                 settings.CustomTenant = true;
-                settings.CustomTenantId = swi;
+                settings.CustomTenantId = tenantId;
                 await Helpers.Utils.SaveConfiguration(settings);
             }
         }

@@ -23,15 +23,19 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommands
             AddOption(deleteOption);
 
             var demoOption = new Option<bool>(
-                name: "--azure", description: "Use this option to show demo with Azure resources");
+                name: "--azure", description: "Use this option to show demo with Azure resources. Without any options the demo will run locally");
             demoOption.AddAlias("-a");
             AddOption(demoOption);
 
-            this.SetHandler(async (deploy, demo, delete) =>
-            { await Demo(deploy, demo, delete); }, deployOption, demoOption, deleteOption);
+            var descriptionOption = new Option<bool>(
+               name: "--describe", description: "Show a description of the demo");
+            AddOption(descriptionOption);
+
+            this.SetHandler(async (deploy, demo, delete, describe) =>
+            { await Execute(deploy, demo, delete, describe); }, deployOption, demoOption, deleteOption, descriptionOption);
         }
 
-        private async Task Demo(bool deploy, bool demo, bool delete)
+        private async Task Execute(bool deploy, bool demo, bool delete, bool describe)
         {
             var rgName = "dapr_state_demo";
             try
@@ -42,22 +46,22 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommands
                 {
                     AnsiConsole.MarkupLine("[blue]RDeploying to Azure[/]");
                     var setting = await Helpers.Utils.LoadConfiguration();
-                    sub = setting.CustomTenant ? await Helpers.AzureHelpers.Authenticate(setting.CustomTenantId) : await Helpers.AzureHelpers.Authenticate();
+                    sub = await Helpers.AzureHelpers.GetSubscriptionBasedOnSettings(setting);
                     var rg = await Helpers.AzureHelpers.CreateResourceGroup(sub, rgName);
                     await CreateCosmosDb(rg);
                     AnsiConsole.MarkupLine("[blue]Resources deployed[/]");
                 }
                 else if (delete)
-                {
                     await Helpers.AzureHelpers.DeleteResourceGroup(rgName);
-                }
+                else if (describe)
+                    Helpers.Utils.ShowDemoDescription(Helpers.DaprType.State);
                 else
                 {
                     if (demo && !deploy)
                     {
                         AnsiConsole.Markup("[blue]Running demo in Azure[/]");
                         if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "/components/state/azure/local_secrets.json"))
-                            await Demo(true, demo, delete);
+                            await Execute(true, demo, delete, describe);
                         await StartDemo("azure");
                     }
                     else

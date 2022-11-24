@@ -19,19 +19,23 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
             AddOption(deployOption);
 
             var demoOption = new Option<bool>(
-                name: "--azure", description: "Use this option to show demo with Azure resources");
+                name: "--azure", description: "Use this option to show demo with Azure resources. Without any options the demo will run locally");
             demoOption.AddAlias("-a");
             AddOption(demoOption);
 
             var deleteOption = new Option<bool>(
-                name: "--delete", "Deletes resources used with this demo");
+                name: "--delete", description: "Deletes resources used with this demo");
             AddOption(deleteOption);
 
-            this.SetHandler(async (deploy, demo, delete) =>
-            { await Demo(deploy, demo, delete); }, deployOption, demoOption, deleteOption);
+            var descriptionOption = new Option<bool>(
+                name: "--describe", description: "Show a description of the demo");
+            AddOption(descriptionOption);
+
+            this.SetHandler(async (deploy, demo, delete, describe) =>
+            { await Execute(deploy, demo, delete, describe); }, deployOption, demoOption, deleteOption, descriptionOption);
         }
 
-        private async Task Demo(bool deploy, bool demo, bool delete)
+        private async Task Execute(bool deploy, bool demo, bool delete, bool describe)
         {
             var rgName = "dapr_binding_demo";
             try
@@ -42,21 +46,21 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
                 {
                     AnsiConsole.MarkupLine("[blue]Deploying to Azure[/]");
                     var setting = await Helpers.Utils.LoadConfiguration();
-                    sub = setting.CustomTenant ? await Helpers.AzureHelpers.Authenticate(setting.CustomTenantId) : await Helpers.AzureHelpers.Authenticate();
+                    sub = await Helpers.AzureHelpers.GetSubscriptionBasedOnSettings(setting);
                     var rg = await Helpers.AzureHelpers.CreateResourceGroup(sub, rgName);
                     await CreateStorageAccount(rg);
                 }
                 else if (delete)
-                {
                     await Helpers.AzureHelpers.DeleteResourceGroup(rgName);
-                }
+                else if (describe)
+                    Helpers.Utils.ShowDemoDescription(Helpers.DaprType.Binding);
                 else
                 {
                     if (demo && !deploy)
                     {
                         AnsiConsole.MarkupLine("[blue]Running demo in Azure[/]");
                         if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "/components/binding/azure/local_secrets.json"))
-                            await Demo(true, demo, delete);
+                            await Execute(true, demo, delete, describe);
                         await StartDemo("azure");
                     }
                     else
@@ -65,7 +69,6 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
                         await StartDemo("local");
                     }
                 }
-
             }
             catch (Exception ex)
             {

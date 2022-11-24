@@ -9,6 +9,8 @@ namespace demos.Commands.DaprRootCommand
     {
         public DaprRootCommand() : base("dapr", "Collection of available Dapr demos")
         {
+            var option = new Option<bool>("bob", "bob");
+            AddGlobalOption(option);
             AddCommand(new StatestoreCommand());
             AddCommand(new BindingCommand());
             AddCommand(new PubSubCommand());
