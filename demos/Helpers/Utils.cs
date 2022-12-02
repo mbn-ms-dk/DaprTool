@@ -1,11 +1,6 @@
 ﻿using demos.Models;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace demos.Helpers
 {
@@ -39,14 +34,12 @@ namespace demos.Helpers
 
         public static async Task<string> GetPublicIpAddress()
         {
-            var url = "http://checkip.dyndns.org";
-            var client = new HttpClient();
-            var response = await client.GetStringAsync(url);
-            var ipAddressWithText = response.Split(':');
-            var ipAddressWithHTMLEnd = ipAddressWithText[1].Substring(1);
-            var ipAddress = ipAddressWithHTMLEnd.Split('<');
-            var mainIP = ipAddress[0];
-            return mainIP;
+            using var client = new HttpClient();
+            var response = await client.GetAsync("https://api.ipify.org?format=json");//("https://api.myip.com/");
+            response.EnsureSuccessStatusCode();
+            var resp = await response.Content.ReadAsStringAsync();
+            var json = JsonSerializer.Deserialize<MyIp>(resp);
+            return json.MyIpAddress;
         }
 
         public static async Task<Settings> LoadConfiguration()
@@ -95,7 +88,7 @@ namespace demos.Helpers
             if (daprType == DaprType.Binding)
                 txt = "The component in the components/binding/azure folder is configured to use Azure Blob Storage." + Environment.NewLine +
                       "and the local component in the components/binding/local is configured to use local file storage." + Environment.NewLine +
-                      "The point to make comparing the files is that as long as the name of the component (in our demo 'files') does not change, " +
+                      "The point to make comparing the files is that as long as the name of the component (in this demo 'files') does not change, " +
                       "the code will work no matter what backing service is used.";
             if (daprType == DaprType.State)
                 txt = "The components/state sub folder contains components for local and Azure." + Environment.NewLine +

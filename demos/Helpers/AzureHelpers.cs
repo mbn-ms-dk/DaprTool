@@ -178,7 +178,7 @@ namespace demos.Helpers
                .SpinnerStyle(Style.Parse("blue"))
                .StartAsync("Creating Resource Group...", async ctx =>
                {
-                   AnsiConsole.MarkupLineInterpolated($"[green]Creating a resource group with name: {rgName}[/]");
+                   AnsiConsole.MarkupLineInterpolated($"[green]Creating a resource group with name:[/] [blue]{rgName}[/]");
                    var rgLro = await sub.GetResourceGroups().CreateOrUpdateAsync(Azure.WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestEurope));
                    resourceGroup = rgLro.Value;
                    AnsiConsole.MarkupLineInterpolated($"[green]Created a resource group with id:[/] [blue] {resourceGroup.Id}[/]");
