@@ -81,28 +81,28 @@ namespace demos.Commands.DaprRootCommand.DaprPubSubCommands
             }
         }
 
-        private async Task StartDemo(string env)
+        private static async Task StartDemo(string env)
         {
             var cmdDapr = $"dapr run --app-id app1 --app-port 5000 --dapr-http-port 3500 --components-path ./components/pubsub/{env} -- dotnet pubsub.dll";
 
-            var cmd = $"wt -w 0 split-pane cmd /K \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
+            var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
 
             // wt -w 0 sp cmd ; wt -w 0 split-pane -H cmd ;wt -w 0 split-pane -H cmd ;
 
             var procStartInfo = new ProcessStartInfo("cmd")
             {
-                Arguments = $"/K {cmd}",
+                Arguments = $"/c {cmd}",
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 CreateNoWindow = true,
                 UseShellExecute = false
             };
-            var proc = new Process();
+            using var proc = new Process();
             proc.StartInfo = procStartInfo;
+            proc.EnableRaisingEvents = true;
             proc.Start();
-            //await proc.StandardInput.WriteAsync(cmd);
-            await proc.StandardInput.FlushAsync();
-            proc.StandardInput.Close();
+            await proc.WaitForExitAsync();
+            proc.Dispose();
             AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
         }
 

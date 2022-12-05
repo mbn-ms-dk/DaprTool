@@ -61,7 +61,7 @@ namespace demos.Helpers
 
         public static async Task<SubscriptionResource> GetDefaultSubscription()
         {
-            var setting = await Helpers.Utils.LoadConfiguration();
+            var setting = await Utils.LoadConfiguration();
             if (setting.CustomTenant)
                 return await Authenticate(setting.CustomTenantId);
 
@@ -70,7 +70,7 @@ namespace demos.Helpers
 
         public static async Task ListSubscriptions()
         {
-            var setting = await Helpers.Utils.LoadConfiguration();
+            var setting = await Utils.LoadConfiguration();
             ArmClient client = null;
             SubscriptionCollection subs = null;
             AnsiConsole.Status()
@@ -121,7 +121,7 @@ namespace demos.Helpers
 
         public static async Task ListTenants()
         {
-            var setting = await Helpers.Utils.LoadConfiguration();
+            var setting = await Utils.LoadConfiguration();
             ArmClient client = null;
             TenantCollection? tenants = null;
             AnsiConsole.Status()

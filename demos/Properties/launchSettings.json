@@ -2,7 +2,7 @@
   "profiles": {
     "demos": {
       "commandName": "Project",
-      "commandLineArgs": "demos debug"
+      "commandLineArgs": "demos dapr obs --deploy"
     }
   }
 }

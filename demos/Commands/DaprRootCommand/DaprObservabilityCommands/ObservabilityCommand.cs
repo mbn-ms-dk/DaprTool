@@ -9,12 +9,13 @@ using System.CommandLine;
 using Azure.ResourceManager;
 using Azure.Identity;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace demos.Commands.DaprRootCommand.DaprObservabilityCommands
 {
-    public class DaprObservabilityCommand : Command
+    public class ObservabilityCommand : Command
     {
-        public DaprObservabilityCommand():base("obs", "Dapr Observability Demo")
+        public ObservabilityCommand():base("obs", "Dapr Observability Demo")
         {
             var deployOption = new Option<bool>(
                name: "--deploy", description: "Create Azure environment (servicebus,eventhub,storage,Azure SQL)");
@@ -92,6 +93,7 @@ namespace demos.Commands.DaprRootCommand.DaprObservabilityCommands
                     AnsiConsole.MarkupLineInterpolated($"[green]Created workspace:[/] [blue]{ws.Value.Data.Name}[/]");
 
                     AnsiConsole.MarkupLine("[green]Creating application insight[/]");
+                    
                 });
         }
     }

@@ -8,7 +8,8 @@ namespace demos.Helpers
     {
         Binding,
         State,
-        Pubsub
+        Pubsub,
+        Secrets
     }
     public static class Utils
     {
@@ -16,6 +17,7 @@ namespace demos.Helpers
         private static readonly string bindingJsonPath = AppDomain.CurrentDomain.BaseDirectory + "/components/binding/azure/local_secrets.json";
         private static readonly string stateJsonPath = AppDomain.CurrentDomain.BaseDirectory + "/components/state/azure/local_secrets.json";
         private static readonly string pubsubJsonPath = AppDomain.CurrentDomain.BaseDirectory + "/components/pubsub/azure/local_secrets.json";
+        private static readonly string secretsJsonPath = AppDomain.CurrentDomain.BaseDirectory + "/components/secrets/azure/local_secrets.json";
         public static string GenerateRandomString(int length)
         {
             var res = new Random();
@@ -76,9 +78,26 @@ namespace demos.Helpers
                 path = stateJsonPath;
             else if (dapr == DaprType.Pubsub)
                 path = pubsubJsonPath;
+            else if (dapr == DaprType.Secrets)
+                path = secretsJsonPath;
             using var fs = File.Create(path);
             fs.Close();
             await File.AppendAllTextAsync(path, json);
+        }
+
+        public static async Task<string> LoadSecretsFile(DaprType dapr)
+        {
+            var path = string.Empty;
+            if (dapr == DaprType.Binding)
+                path = bindingJsonPath;
+            else if (dapr == DaprType.State)
+                path = stateJsonPath;
+            else if (dapr == DaprType.Pubsub)
+                path = pubsubJsonPath;
+            else if (dapr == DaprType.Secrets)
+                path = secretsJsonPath;
+
+            return await File.ReadAllTextAsync(path);
         }
 
         public static void ShowDemoDescription(DaprType daprType)
@@ -99,6 +118,10 @@ namespace demos.Helpers
                     "The components/pubsub/azure and components folders are so you can show the difference between a local component" + Environment.NewLine +
                     "and a component configured for the cloud. The component in the components/pubsub/azure folder is configured to use Azure Service Bus." + Environment.NewLine +
                     "and the local component is configured to use Redis." + Environment.NewLine + 
+                    "The point to make comparing the files is that as long as the name of the component does not change the code will work no matter what backing service is used.";
+            if (daprType == DaprType.Secrets)
+                txt = @"The components/azure and components folders are in the workspace so you can show the difference between a local component and a component configured for the cloud." + Environment.NewLine +
+                    "The component in the components/azure folder is configured to use Azure Key Vault and the local component is configured to use local file." + Environment.NewLine + 
                     "The point to make comparing the files is that as long as the name of the component does not change the code will work no matter what backing service is used.";
 
             var panel = new Panel(txt)

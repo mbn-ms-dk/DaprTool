@@ -25,10 +25,10 @@ void DisplayFiglets(bool show)
 {
     if(show)
     {
-        AnsiConsole.Write(new FigletText(FigletFont.Load("starwars.flf"), "DK CSU").Color(Color.Red));
-        AnsiConsole.Write(new FigletText(FigletFont.Load("starwars.flf"), "App Inno").Color(Color.Blue));
+        AnsiConsole.Write(new FigletText(FigletFont.Load($"{AppDomain.CurrentDomain.BaseDirectory}starwars.flf"), "DK CSU").Color(Color.Red));
+        AnsiConsole.Write(new FigletText(FigletFont.Load($"{AppDomain.CurrentDomain.BaseDirectory}starwars.flf"), "App Inno").Color(Color.Blue));
     }
 }
 
 await rootCmd.InvokeAsync(args);
-//Console.ReadLine();
+Console.ReadLine();

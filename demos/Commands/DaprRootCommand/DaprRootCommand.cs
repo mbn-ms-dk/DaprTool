@@ -1,5 +1,7 @@
 ﻿using demos.Commands.DaprRootCommand.DaprBindingCommands;
+using demos.Commands.DaprRootCommand.DaprObservabilityCommands;
 using demos.Commands.DaprRootCommand.DaprPubSubCommands;
+using demos.Commands.DaprRootCommand.DaprSecretsCommands;
 using demos.Commands.DaprRootCommand.DaprStatestoreCommands;
 using System.CommandLine;
 
@@ -12,6 +14,8 @@ namespace demos.Commands.DaprRootCommand
             AddCommand(new StatestoreCommand());
             AddCommand(new BindingCommand());
             AddCommand(new PubSubCommand());
+            AddCommand(new SecretsCommand());
+            AddCommand(new ObservabilityCommand());
         }
     }
 }

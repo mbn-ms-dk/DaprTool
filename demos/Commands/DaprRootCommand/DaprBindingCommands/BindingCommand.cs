@@ -80,7 +80,7 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
         {
             var cmdDapr = $"dapr run --app-id {env} --dapr-http-port 3500 --components-path ./components/binding/{env}";
 
-            var cmd = $"wt -w 0 split-pane cmd /K \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
+            var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
 
             //if (env == "local")
             //    cmd += " `; split-pane -H cmd /K start msedge http://localhost:8080 `; split-pane -H cmd /K dapr dashboard";
@@ -88,18 +88,18 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
 
             var procStartInfo = new ProcessStartInfo("cmd")
             {
-                Arguments = $"/K {cmd}",
+                Arguments = $"/c {cmd}",
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 CreateNoWindow = true,
                 UseShellExecute = false
             };
-            var proc = new Process();
+            using var proc = new Process();
             proc.StartInfo = procStartInfo;
+            proc.EnableRaisingEvents = true;
             proc.Start();
-            //await proc.StandardInput.WriteAsync(cmd);
-            await proc.StandardInput.FlushAsync();
-            proc.StandardInput.Close();
+            await proc.WaitForExitAsync();
+            proc.Dispose();
             AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
         }
 

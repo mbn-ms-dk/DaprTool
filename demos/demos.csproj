@@ -6,12 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <!-- tool-->
-	  <PackAsTool>true</PackAsTool>
+	  <PackAsTool>false</PackAsTool>
 	  <ToolCommandName>demos</ToolCommandName>
 	  <PackageOutputPath>./nupkg</PackageOutputPath>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\DebugCommands\**" />
+    <EmbeddedResource Remove="Commands\DebugCommands\**" />
+    <None Remove="Commands\DebugCommands\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="components\appl\settings.json" />
@@ -31,6 +37,11 @@
     <None Remove="components\pubsub\local\pubsub2.yaml" />
     <None Remove="components\pubsub\local\pubsub2_subscription.yaml" />
     <None Remove="components\pubsub\local\statestore.yaml" />
+    <None Remove="components\secrets\azure\local_secrets.json" />
+    <None Remove="components\secrets\azure\secretstore.yaml" />
+    <None Remove="components\secrets\azure\strongbox.yaml" />
+    <None Remove="components\secrets\local\local_secrets.json" />
+    <None Remove="components\secrets\local\secretstore.yaml" />
     <None Remove="components\state\azure\local_secrets.json" />
     <None Remove="components\state\azure\secretstores.local.file.yaml" />
     <None Remove="components\state\azure\state.azure.cosmosdb.yaml" />
@@ -90,6 +101,21 @@
     <Content Include="components\pubsub\local\statestore.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="components\secrets\azure\local_secrets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\secrets\azure\strongbox.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\secrets\azure\secretstore.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\secrets\local\local_secrets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\secrets\local\secretstore.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="components\state\azure\local_secrets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -115,7 +141,7 @@
     <PackageReference Include="Azure.ResourceManager.AppService" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.2.0" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0" />
-    <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.0.0-beta.8" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Monitor" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Network" Version="1.1.0" />
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" Version="1.0.0" />
@@ -124,15 +150,18 @@
     <PackageReference Include="Azure.ResourceManager.ServiceBus" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Sql" Version="1.1.0" />
     <PackageReference Include="Azure.ResourceManager.Storage" Version="1.0.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Administration" Version="4.3.0-beta.1" />
+    <PackageReference Include="Azure.Security.KeyVault.Certificates" Version="4.5.0-beta.1" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.5.0-beta.1" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.5.0-beta.1" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.0" />
-    <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.45" />
+    <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.46" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-    <PackageReference Include="YamlDotNet" Version="12.0.2" />
+    <PackageReference Include="YamlDotNet" Version="12.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\DebugCommands\" />
     <Folder Include="PostmanCollections\" />
     <Folder Include="nupkg\" />
   </ItemGroup>

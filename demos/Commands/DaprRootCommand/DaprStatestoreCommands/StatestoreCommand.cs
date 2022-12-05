@@ -81,21 +81,21 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommands
         {
             var cmdDapr = $"dapr run --app-id {env} --dapr-http-port 3500 --components-path ./components/state/{env}";
 
-            var cmd = $"wt -w 0 split-pane cmd /K \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
+            var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
             var procStartInfo = new ProcessStartInfo("cmd")
             {
-                Arguments = $"/K {cmd}",
+                Arguments = $"/c {cmd}",
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 CreateNoWindow = true,
                 UseShellExecute = false
             };
-            var proc = new Process();
+            using var proc = new Process();
             proc.StartInfo = procStartInfo;
+            proc.EnableRaisingEvents = true;
             proc.Start();
-            //await proc.StandardInput.WriteAsync(cmd);
-            await proc.StandardInput.FlushAsync();
-            proc.StandardInput.Close();
+            await proc.WaitForExitAsync();
+            proc.Dispose();
             AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
         }
 
