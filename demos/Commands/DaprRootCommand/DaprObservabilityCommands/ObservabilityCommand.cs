@@ -121,6 +121,7 @@ namespace demos.Commands.DaprRootCommand.DaprObservabilityCommands
                     docker = "docker start dapr_zipkin";
                     await Utils.RunCmd(docker);
                     AnsiConsole.MarkupLine("[green]dapr_zipkin container started[/]");
+                    Thread.Sleep(500);
                 }
                 else
                 {
@@ -136,6 +137,7 @@ namespace demos.Commands.DaprRootCommand.DaprObservabilityCommands
                     docker = $"docker run -itd --name otel-opentelemetry -v {AppDomain.CurrentDomain.BaseDirectory}components/obs/config/azure/otel-local-config.yaml:/etc/otel/config.yaml -p 9411:9411 otel/opentelemetry-collector";
                     await Utils.RunCmd(docker);
                     AnsiConsole.MarkupLine("[green]Started otel/opentelemetry-collector-contrib[/]");
+                    Thread.Sleep(500);
                 }
                  
                 var cmdDapr1 = $"dapr run -a serviceA -p 5000 -H 3500 -- dotnet serviceA.dll --urls \"http://localhost:5000\"";
