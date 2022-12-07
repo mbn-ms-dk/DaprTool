@@ -1,99 +1,125 @@
-﻿using System;
+﻿using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.EventHubs.Models;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using YamlDotNet.Serialization;
 
 namespace demos.Models
 {
-    public partial class ObservabilityToYaml
+    public  class ObservabilityToYaml
     {
-        [JsonPropertyName("receivers")]
+        [YamlMember  (Alias = "receivers")]
         public Receivers Receivers { get; set; }
-
-        [JsonPropertyName("extensions")]
+        [YamlMember(Alias = "extensions")]
         public Extensions Extensions { get; set; }
-
-        [JsonPropertyName("exporters")]
+        [YamlMember (Alias ="exporters")]
         public Exporters Exporters { get; set; }
-
-        [JsonPropertyName("service")]
+        [YamlMember (Alias = "service")]
         public Service Service { get; set; }
     }
 
-    public partial class Exporters
+    #region receivers
+    public class Receivers
     {
-        [JsonPropertyName("logging")]
-        public Logging Logging { get; set; }
-
-        [JsonPropertyName("azuremonitor")]
-        public Azuremonitor Azuremonitor { get; set; }
+        [YamlMember(Alias = "zipkin")]
+        public Zipkin Zipkin { get; set; }
     }
 
-    public partial class Azuremonitor
+    public class Zipkin { }
+    #endregion receivers
+
+    #region extensions
+    public class Extensions
     {
-        [JsonPropertyName("instrumentation_key")]
-        public Guid InstrumentationKey { get; set; }
-
-        [JsonPropertyName("maxbatchinterval")]
-        public string Maxbatchinterval { get; set; }
-
-        [JsonPropertyName("maxbatchsize")]
-        public long Maxbatchsize { get; set; }
-    }
-
-    public partial class Logging
-    {
-        [JsonPropertyName("loglevel")]
-        public string Loglevel { get; set; }
-    }
-
-    public partial class Extensions
-    {
-        [JsonPropertyName("health_check")]
-        public object HealthCheck { get; set; }
-
-        [JsonPropertyName("pprof")]
+        //public HealthCheck HealthCheck { get; set; }
+        [YamlMember (Alias = "pprof")]
         public Pprof Pprof { get; set; }
-
-        [JsonPropertyName("zpages")]
-        public Pprof Zpages { get; set; }
+        [YamlMember(Alias = "zpages")]
+        public Zpages Zpages { get; set; }
     }
 
-    public partial class Pprof
+    public class HealthCheck { }
+    public class Pprof
     {
-        [JsonPropertyName("endpoint")]
-        public string Endpoint { get; set; }
+        [YamlMember(Alias = "endpoint")]
+        public long Endpoint { get; set; } = 1888;
     }
 
-    public partial class Receivers
+    public class Zpages
     {
-        [JsonPropertyName("zipkin")]
-        public object Zipkin { get; set; }
+        [YamlMember(Alias = "endpoint")]
+        public long Endpoint { get; set; } = 55679;
+
+    }
+    #endregion
+
+    #region exporters
+    public class Exporters
+    {
+        [YamlMember (Alias = "logging")]
+        public Logging Logging { get; set; }
+        [YamlMember (Alias = "azuremonitor")]
+        public AzureMonitor AzureMonitor { get; set; }
     }
 
-    public partial class Service
+    public class Logging
     {
-        [JsonPropertyName("extensions")]
-        public string[] Extensions { get; set; }
+        [YamlMember(Alias = "logLevel")]
+        public string LogLevel { get; set; } = "debug";
+    }
 
-        [JsonPropertyName("pipelines")]
+    public class AzureMonitor
+    {
+        [YamlMember (Alias = "instrumentation_key")]
+        public string InstrumentationKey { get; set; }
+        [YamlMember(Alias = "maxbatchinterval")]
+        public string MaxBatchInterval { get; set; } = "5s";
+        [YamlMember(Alias = "maxbatchsize")]
+        public int MaxBatchSize { get; set; } = 5;
+    }
+    #endregion
+
+    #region service
+    public class Service
+    {
+        [YamlMember (Alias = "extensions")]
+        public ServiceExtensions Extensions { get; set; }
+        [YamlMember (Alias = "pipelines")]
         public Pipelines Pipelines { get; set; }
     }
 
-    public partial class Pipelines
+    public class ServiceExtensions
     {
-        [JsonPropertyName("traces")]
+        public string[] Extensions { get; set; }
+    }
+
+    public class Pipelines
+    {
+        [YamlMember (Alias = "traces")]
         public Traces Traces { get; set; }
     }
 
-    public partial class Traces
+    public class Traces
     {
-        [JsonPropertyName("receivers")]
-        public string[] Receivers { get; set; }
+        [YamlMember (Alias = "receivers")]
+        public ServicePipelineTraceReceivers Receivers { get; set; }
+        [YamlMember (Alias = "exporters")]
+        public ServicePipelineTraceExporters Exporters { get; set; }
+    }
 
-        [JsonPropertyName("exporters")]
+    public class ServicePipelineTraceReceivers
+    {
+        public string[] Receivers { get; set; }
+    }
+
+    public class ServicePipelineTraceExporters
+    {
         public string[] Exporters { get; set; }
     }
+    #endregion
 }

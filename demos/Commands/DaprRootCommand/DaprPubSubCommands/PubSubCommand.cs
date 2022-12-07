@@ -89,21 +89,7 @@ namespace demos.Commands.DaprRootCommand.DaprPubSubCommands
 
             // wt -w 0 sp cmd ; wt -w 0 split-pane -H cmd ;wt -w 0 split-pane -H cmd ;
 
-            var procStartInfo = new ProcessStartInfo("cmd")
-            {
-                Arguments = $"/c {cmd}",
-                RedirectStandardOutput = true,
-                RedirectStandardInput = true,
-                CreateNoWindow = true,
-                UseShellExecute = false
-            };
-            using var proc = new Process();
-            proc.StartInfo = procStartInfo;
-            proc.EnableRaisingEvents = true;
-            proc.Start();
-            await proc.WaitForExitAsync();
-            proc.Dispose();
-            AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
+            await Helpers.Utils.RunDemo(env, cmd);
         }
 
         private async Task CreateAzureResources(ResourceGroupResource rg)

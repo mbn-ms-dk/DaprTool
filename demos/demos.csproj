@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <!-- tool-->
-	  <PackAsTool>false</PackAsTool>
-	  <ToolCommandName>demos</ToolCommandName>
-	  <PackageOutputPath>./nupkg</PackageOutputPath>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- tool-->
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>demos</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Commands\DebugCommands\**" />
@@ -25,6 +25,9 @@
     <None Remove="components\binding\azure\local_secrets.json" />
     <None Remove="components\binding\azure\secretstores.local.file.yaml" />
     <None Remove="components\binding\local\localstorage.yaml" />
+    <None Remove="components\obs\config\azure\otel-local-config.yaml" />
+    <None Remove="components\obs\Services.png" />
+    <None Remove="components\obs\tye_cloud.yaml" />
     <None Remove="components\pubsub\azure\eventhubs.yaml" />
     <None Remove="components\pubsub\azure\eventhubs_subscription.yaml" />
     <None Remove="components\pubsub\azure\local_secrets.json" />
@@ -63,6 +66,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="components\binding\local\localstorage.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\obs\config\azure\otel-local-config.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\obs\Services.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\obs\tye_cloud.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\obs\tye_local.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="components\pubsub\azure\eventhubs.yaml">
@@ -141,6 +156,7 @@
     <PackageReference Include="Azure.ResourceManager.AppService" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.2.0" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.Insights" Version="1.0.0-preview.1" />
     <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Monitor" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Network" Version="1.1.0" />
@@ -157,6 +173,7 @@
     <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.0" />
     <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.46" />
+    <PackageReference Include="Spectre.Console.ImageSharp" Version="0.45.1-preview.0.46" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageReference Include="YamlDotNet" Version="12.1.0" />
   </ItemGroup>
@@ -168,6 +185,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\pubsub\pubsub.csproj" />
+    <ProjectReference Include="..\serviceA\serviceA.csproj" />
+    <ProjectReference Include="..\serviceB\serviceB.csproj" />
+    <ProjectReference Include="..\serviceC\serviceC.csproj" />
   </ItemGroup>
 
 </Project>

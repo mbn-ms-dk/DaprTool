@@ -83,24 +83,8 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
             var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
 
             //if (env == "local")
-            //    cmd += " `; split-pane -H cmd /K start msedge http://localhost:8080 `; split-pane -H cmd /K dapr dashboard";
-
-
-            var procStartInfo = new ProcessStartInfo("cmd")
-            {
-                Arguments = $"/c {cmd}",
-                RedirectStandardOutput = true,
-                RedirectStandardInput = true,
-                CreateNoWindow = true,
-                UseShellExecute = false
-            };
-            using var proc = new Process();
-            proc.StartInfo = procStartInfo;
-            proc.EnableRaisingEvents = true;
-            proc.Start();
-            await proc.WaitForExitAsync();
-            proc.Dispose();
-            AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
+            //    cmd += "; wt -w 0 sp -H cmd /c start msedge http://localhost:8080; wt -w 0 sp -H cmd /c dapr dashboard";
+            await Helpers.Utils.RunDemo(env, cmd);
         }
 
         private async Task CreateStorageAccount(ResourceGroupResource rg)

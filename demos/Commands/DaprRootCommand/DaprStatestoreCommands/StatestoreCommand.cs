@@ -82,21 +82,9 @@ namespace demos.Commands.DaprRootCommand.DaprStatestoreCommands
             var cmdDapr = $"dapr run --app-id {env} --dapr-http-port 3500 --components-path ./components/state/{env}";
 
             var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
-            var procStartInfo = new ProcessStartInfo("cmd")
-            {
-                Arguments = $"/c {cmd}",
-                RedirectStandardOutput = true,
-                RedirectStandardInput = true,
-                CreateNoWindow = true,
-                UseShellExecute = false
-            };
-            using var proc = new Process();
-            proc.StartInfo = procStartInfo;
-            proc.EnableRaisingEvents = true;
-            proc.Start();
-            await proc.WaitForExitAsync();
-            proc.Dispose();
-            AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
+            //if (env == "local")
+            //    cmd += ";wt -w 0 sp -H cmd /c start msedge http://localhost:8080; wt -w 0 sp -H cmd /c dapr dashboard";
+            await Helpers.Utils.RunDemo(env, cmd);
         }
 
         private async Task CreateCosmosDb(ResourceGroupResource rgr)

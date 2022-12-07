@@ -31,4 +31,4 @@ void DisplayFiglets(bool show)
 }
 
 await rootCmd.InvokeAsync(args);
-Console.ReadLine();
+//Console.ReadLine();

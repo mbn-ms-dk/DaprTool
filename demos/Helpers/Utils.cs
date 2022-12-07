@@ -1,5 +1,6 @@
 ﻿using demos.Models;
 using Spectre.Console;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace demos.Helpers
@@ -9,7 +10,8 @@ namespace demos.Helpers
         Binding,
         State,
         Pubsub,
-        Secrets
+        Secrets,
+        Observability
     }
     public static class Utils
     {
@@ -123,6 +125,11 @@ namespace demos.Helpers
                 txt = @"The components/azure and components folders are in the workspace so you can show the difference between a local component and a component configured for the cloud." + Environment.NewLine +
                     "The component in the components/azure folder is configured to use Azure Key Vault and the local component is configured to use local file." + Environment.NewLine + 
                     "The point to make comparing the files is that as long as the name of the component does not change the code will work no matter what backing service is used.";
+            if (daprType == DaprType.Observability)
+                txt = @"The core of the demo is ithree services, Service A, B, and C. Service A subscribes to the PubSub component. " + Environment.NewLine + 
+                     "When a new order is received Service A calls Service B using service to service invocation." + Environment.NewLine + 
+                     "When Service A gets a response from Service B, Service A stores the processed order using the StateStore component." + Environment.NewLine + 
+                     "Finally, Service A publishes the order to the PubSub component where Service C reads it.";
 
             var panel = new Panel(txt)
             {
@@ -132,6 +139,47 @@ namespace demos.Helpers
                 BorderStyle = new Style(foreground: Color.Blue)
             };
             AnsiConsole.Write(panel);
+            //if(daprType == DaprType.Observability)
+            //{
+            //    var img = new CanvasImage("./components/obs/Services.png");
+            //    img.MaxWidth = 256;
+            //    AnsiConsole.Write(img);
+            //}
+        }
+
+        public static async Task RunDemo(string env, string cmd)
+        {
+            AnsiConsole.MarkupLineInterpolated($"[yellow]Running Dapr with app-id {env}[/]");
+            var procStartInfo = new ProcessStartInfo("cmd")
+            {
+                Arguments = $"/c {cmd}",
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            using var proc = new Process();
+            proc.StartInfo = procStartInfo;
+            proc.Start();
+            await proc.WaitForExitAsync();
+            proc.Dispose();
+        }
+
+        public static async Task RunCmd(string cmd)
+        {
+            var procStartInfo = new ProcessStartInfo("cmd")
+            {
+                Arguments = $"/c {cmd}",
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            using var proc = new Process();
+            proc.StartInfo = procStartInfo;
+            proc.Start();
+            await proc.WaitForExitAsync();
+            proc.Dispose();
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿<Project>
 	<PropertyGroup>
-		<Version>0.1.7</Version>
+		<Version>0.1.8</Version>
     <Authors>minielsen</Authors>
-    <Copyright>minielsen</Copyright>
-    <Company>minielsen</Company>
+    <Copyright>NA</Copyright>
+    <Company>NA</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/mbn-ms-dk/DaprTool</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mbn-ms-dk/DaprTool</RepositoryUrl>
