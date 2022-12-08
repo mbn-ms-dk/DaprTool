@@ -139,12 +139,6 @@ namespace demos.Helpers
                 BorderStyle = new Style(foreground: Color.Blue)
             };
             AnsiConsole.Write(panel);
-            //if(daprType == DaprType.Observability)
-            //{
-            //    var img = new CanvasImage("./components/obs/Services.png");
-            //    img.MaxWidth = 256;
-            //    AnsiConsole.Write(img);
-            //}
         }
 
         public static async Task RunDemo(string env, string cmd)

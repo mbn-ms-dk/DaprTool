@@ -90,7 +90,10 @@ namespace demos.Commands.DaprRootCommand.DaprObservabilityCommands
             if (useTye)
             {
                 var cmd = "";
-                if(env == "local")
+                AnsiConsole.MarkupInterpolated($"[green]Making sure Microsoft.Tye is installed...[/]");
+                cmd = "dotnet tool install -g Microsoft.Tye --version \"0.12.0-*\" --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json";
+                await Utils.RunCmd(cmd);
+                if (env == "local")
                 {
                     AnsiConsole.MarkupLine("[green]Starting dapr_zipkin container[/]");
                     cmd = "docker start dapr_zipkin";

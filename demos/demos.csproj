@@ -71,7 +71,7 @@
     <Content Include="components\obs\config\azure\otel-local-config.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="components\obs\Services.png">
+    <Content Include="documentation\images\Services.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="components\obs\tye_cloud.yaml">
