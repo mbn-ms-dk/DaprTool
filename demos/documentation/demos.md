@@ -96,7 +96,7 @@ demos user --list-tenant
 Which will give you the following result as a dynamic table:
 ![video showing the command](/demos/documentation/images/gifs/demos_user_list_tenant.gif)
 
-### List Subscriptiom Option
+### List Subscription Option
 The full command with `--list-sub` option:
 ```bash
 demos user --list-sub
@@ -104,9 +104,17 @@ demos user --list-sub
 Which will give you the following result as a dynamic table:
 ![video showing the command](/demos/documentation/images/gifs/demos_user_list_sub.gif)
 
+### Set Tenant Options
+The full command with `--tenant <tenantId>` option
+```bash
+demos user --tenant <tenantId>
+```
+![video showing the command](/demos/documentation/images/gifs/demos_user_tenant.gif)
+
 ### debug command
 The __debug__ command list some variables to show the tools installation location.
-This command have a single option `-?|-h|--help`:
+
+This command have no other options than help: `-?|-h|--help`:
 ![Image showing debug help](/demos/documentation/images/demos_debug_help.png)
 
 The full command
