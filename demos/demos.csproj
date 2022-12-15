@@ -49,6 +49,7 @@
     <None Remove="components\state\azure\secretstores.local.file.yaml" />
     <None Remove="components\state\azure\state.azure.cosmosdb.yaml" />
     <None Remove="components\state\local\state.redis.yaml" />
+    <None Remove="documentation\demos.md" />
     <None Remove="starwars.flf" />
   </ItemGroup>
 
@@ -69,6 +70,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="components\obs\config\azure\otel-local-config.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="documentation\demos.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="documentation\images\Services.png">
