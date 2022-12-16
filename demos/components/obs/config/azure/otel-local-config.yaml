@@ -1,4 +1,5 @@
-﻿receivers:
+﻿---
+receivers:
   zipkin:
 extensions:
   health_check:

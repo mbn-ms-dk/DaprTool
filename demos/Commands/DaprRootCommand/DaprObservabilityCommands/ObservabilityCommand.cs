@@ -8,7 +8,6 @@ using Spectre.Console;
 using System.CommandLine;
 using System.Diagnostics;
 using System.Text.Json;
-using YamlDotNet.Serialization;
 
 namespace demos.Commands.DaprRootCommand.DaprObservabilityCommands;
 
@@ -16,29 +15,26 @@ public class ObservabilityCommand : Command
 {
     public ObservabilityCommand() : base("obs", "Dapr Observability Demo")
     {
-        var deployOption = new Option<bool>(
-           name: "--deploy", description: "Create Azure environment (servicebus,eventhub,storage,Azure SQL)");
+        var deployOption = new Option<bool>(name: "--deploy", description: "Create Azure environment (servicebus,eventhub,storage,Azure SQL)");
         AddOption(deployOption);
 
-        var demoOption = new Option<bool>(
-            name: "--azure", description: "Use this option to show demo with Azure resources. Without any options the demo will run locally");
+        var demoOption = new Option<bool>(name: "--azure", description: "Use this option to show demo with Azure resources. Without any options the demo will run locally");
         demoOption.AddAlias("-a");
         AddOption(demoOption);
 
-        var deleteOption = new Option<bool>(
-            name: "--delete", "Deletes resources used with this demo");
+        var deleteOption = new Option<bool>(name: "--delete", "Deletes resources used with this demo");
         AddOption(deleteOption);
 
-        var descriptionOption = new Option<bool>(
-           name: "--describe", description: "Show a description of the demo");
+        var descriptionOption = new Option<bool>(name: "--describe", description: "Show a description of the demo");
         AddOption(descriptionOption);
 
-        var tyeOption = new Option<bool>(
-            name: "--useTye", description: "Use Tye for demo");
+        var tyeOption = new Option<bool>(name: "--useTye", description: "Use Tye for demo");
         AddOption(tyeOption);
 
         this.SetHandler(async (deploy, demo, delete, describe, useTye) =>
-        { await Execute(deploy, demo, delete, describe, useTye); }, deployOption, demoOption, deleteOption, descriptionOption, tyeOption);
+        {
+            await Execute(deploy, demo, delete, describe, useTye);
+        }, deployOption, demoOption, deleteOption, descriptionOption, tyeOption);
     }
 
     private async Task Execute(bool deploy, bool demo, bool delete, bool describe, bool useTye)
@@ -56,9 +52,13 @@ public class ObservabilityCommand : Command
                 await CreateAzureResources(rg, sub, setting);
             }
             else if (delete)
+            {
                 await AzureHelpers.DeleteResourceGroup(rgName);
+            }
             else if (describe)
+            {
                 Utils.ShowDemoDescription(DaprType.Observability);
+            }
             else
             {
                 if (demo && !deploy)
@@ -146,7 +146,7 @@ public class ObservabilityCommand : Command
             var cmd = $"wt -w 0 sp cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr1}\"";
             cmd += $" ; wt -w 0 sp cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr2}\"";
             cmd += $" ; wt -w 0 sp -H cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr3}\"";
-            // wt -w 0 sp cmd ; wt -w 0 split-pane -H cmd ;wt -w 0 split-pane -H cmd ;
+
             await Utils.RunDemo(env, cmd);
         }
     }

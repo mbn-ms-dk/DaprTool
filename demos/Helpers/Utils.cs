@@ -30,9 +30,9 @@ public static class Utils
 
         var randomstring = string.Empty;
 
-        for (int i = 0; i < length; i++)
+        for (var i = 0; i < length; i++)
         {
-            int x = res.Next(str.Length);
+            var x = res.Next(str.Length);
             randomstring = randomstring + str[x];
         }
         return randomstring;
@@ -75,7 +75,8 @@ public static class Utils
 
     public static async Task SaveSecretsFile(DaprType dapr, string json)
     {
-        var path = dapr switch {
+        var path = dapr switch
+        {
             DaprType.Binding => bindingJsonPath,
             DaprType.State => stateJsonPath,
             DaprType.Pubsub => pubsubJsonPath,
@@ -88,7 +89,8 @@ public static class Utils
 
     public static async Task<string> LoadSecretsFile(DaprType dapr)
     {
-        var path = dapr switch {
+        var path = dapr switch
+        {
             DaprType.Binding => bindingJsonPath,
             DaprType.State => stateJsonPath,
             DaprType.Pubsub => pubsubJsonPath,

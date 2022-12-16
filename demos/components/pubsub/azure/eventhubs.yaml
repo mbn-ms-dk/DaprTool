@@ -1,3 +1,4 @@
+---
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
@@ -21,4 +22,4 @@ spec:
         key: storageAccountKey
         name: storageAccountKey
     - name: storageContainerName
-      value: "neworder"
+      value: neworder
