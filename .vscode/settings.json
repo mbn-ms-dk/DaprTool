@@ -20,5 +20,6 @@
     ],
     "cSpell.words": [
         "dapr"
-    ]
+    ],
+    "yaml.format.singleQuote": true
 }

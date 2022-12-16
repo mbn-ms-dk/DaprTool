@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace demos.Models
+namespace demos.Models;
+
+public record Settings
 {
-    public record Settings
-    {
-        [property: JsonPropertyName("isCustomTenant")]
-        public bool CustomTenant { get; set; }
-        [property: JsonPropertyName("customTenantId")]
-        public string? CustomTenantId { get; set; }
-    }
-   
+    [JsonPropertyName("isCustomTenant")]
+    public bool CustomTenant { get; set; }
+
+    [JsonPropertyName("customTenantId")]
+    public string? CustomTenantId { get; set; }
 }

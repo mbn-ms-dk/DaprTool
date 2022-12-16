@@ -183,7 +183,7 @@ public class SecretsCommand : Command
                         kvProps));
                 AnsiConsole.MarkupLineInterpolated($"[green]Created keyvault:[/] [blue]{kv.Value.Data.Name}[/]");
                 AnsiConsole.MarkupLine("[green]saving settings[/]");
-                secretsJson.KeyvaultName = kvName;
+                secretsJson.KeyVaultName = kvName;
                 await Helpers.Utils.SaveSecretsFile(Helpers.DaprType.Secrets, JsonSerializer.Serialize<SecretsJson>(secretsJson));
                 AnsiConsole.MarkupLineInterpolated($"[green]Saved settings[/]");
                 AnsiConsole.MarkupLine("[green]Creating Keyvault secret Client[/]");
