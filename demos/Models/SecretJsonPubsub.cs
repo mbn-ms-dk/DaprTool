@@ -21,7 +21,7 @@ public class SecretJsonPubsub
 
     [JsonPropertyName("storageAccountName")]
     public string StorageAccountName { get; set; }
-    
+
     [JsonPropertyName("storageAccountKey")]
     public string StorageAccountKey { get; set; }
 }

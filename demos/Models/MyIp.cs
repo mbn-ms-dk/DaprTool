@@ -2,7 +2,7 @@
 
 namespace demos.Models;
 
-public  class MyIp
+public class MyIp
 {
     [JsonPropertyName("ip")]
     public string MyIpAddress { get; set; }

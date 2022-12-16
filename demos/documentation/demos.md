@@ -47,7 +47,7 @@ Install the __demos__ tool:
 
 - To test and make sure everything works there are Postman Collections added to the project [here](https://github.com/mbn-ms-dk/DaprTool/tree/main/demos/PostmanCollections)
 
-# demos Tool commands, subcommands and options
+## demos Tool commands, subcommands and options
 
 The root command is `demos` and will initially lauch the tool.
 Options are added to a command using hyphen(s) as in `--<option>` and subcommands are used in conjunction with the rootcommand
