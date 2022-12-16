@@ -26,7 +26,6 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
-          VALIDATE_GITLEAKS: false  # should be true, need time to fix
           VALIDATE_JSCPD: false  # should be true, need time to fix
           VALIDATE_KUBERNETES_KUBEVAL: false  # validates schema of dapr files - not sure if it can be fixed currently
 
