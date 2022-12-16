@@ -10,7 +10,7 @@ var rootCmd = new RootCommand("A variaty of different demos");
 
 var showHelp = new Option<bool>(
     name: "--readme", description: "Open browser and shows demos Tool readme");
-rootCmd.AddGlobalOption(showHelp);
+rootCmd.AddOption(showHelp);
 
 var showFiglets = new Option<bool>(
     name: "--show", description: "Show CSU Figlets");

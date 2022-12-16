@@ -40,7 +40,7 @@ Options are added to a command using hyphen(s) as in `--<option>` and subcommand
 ## Options
 
 To the root command there are options:
-* `--readme` which is a global command (can be added to all commands and subcommands) will open edge browser and show a more detailed readme for the different demos
+* `--readme` which is an option will open edge browser and show a more detailed readme for the different demos
 * `--show` which will show a Figlet
 * `--version` which will show the version number
 * `-?`, `-h` or `--help` which will provide help information. __this option is available for all commands and subcommands__
