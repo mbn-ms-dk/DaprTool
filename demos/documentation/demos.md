@@ -616,7 +616,8 @@ Finally, Service A publishes the order to the __PubSub__ component where Service
 
 ![Image showing service diagram](/demos/documentation/images/Services.png)
 
-Furthermore this demo contains a _otel-local-config.yaml_ file that contains the configuration for the [Open Telemetry Collector used to send the data to Application Insights](https://docs.dapr.io/operations/monitoring/tracing/open-telemetry-collector-appinsights/). The Open Telemetry Collector is run in a local container. When the demo is running locally the telemetry is send to the _dapr_zipkin_ container this is installed during `dapr init` and can be viewed at <http://localhost:9411/zipkin/>
+Furthermore this demo contains a _otel-local-config.yaml_ file which contains the configuration for the [Open Telemetry Collector used to send the data to Application Insights](https://docs.dapr.io/operations/monitoring/tracing/open-telemetry-collector-appinsights/).
+The Open Telemetry Collector is run in a local container. When the demo is running locally the telemetry is send to the _dapr_zipkin_ container this is installed during `dapr init` and can be viewed at <http://localhost:9411/zipkin/>
 
 This demo also contains the option to run dapr with [Microsoft Tye](https://github.com/dotnet/tye) and the option is `----useTye`
 
