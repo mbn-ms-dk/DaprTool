@@ -15,7 +15,7 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
         public BindingCommand() : base("binding", "Dapr binding demo")
         {
             var deployOption = new Option<bool>(
-               name: "--deploy", description: "Create Azure environment (storageaccount)");
+               name: "--deploy", description: "Create Azure environment (storage account)");
             AddOption(deployOption);
 
             var demoOption = new Option<bool>(
@@ -80,7 +80,7 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
         {
             var cmdDapr = $"dapr run --app-id {env} --dapr-http-port 3500 --components-path ./components/binding/{env}";
 
-            var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}"; 
+            var cmd = $"wt -w 0 split-pane cmd /c \"cd {AppDomain.CurrentDomain.BaseDirectory} & {cmdDapr}\"";//$"wt cmd /K {cmdDapr}";
 
             //if (env == "local")
             //    cmd += "; wt -w 0 sp -H cmd /c start msedge http://localhost:8080; wt -w 0 sp -H cmd /c dapr dashboard";
@@ -99,7 +99,7 @@ namespace demos.Commands.DaprRootCommand.DaprBindingCommands
                         $"stg{Helpers.Utils.GenerateRandomString(4)}demo",
                         new StorageAccountCreateOrUpdateContent(
                             new StorageSku(StorageSkuName.StandardLrs),
-                            StorageKind.Storage,
+                            StorageKind.StorageV2,
                             AzureLocation.WestEurope));
                     AnsiConsole.MarkupInterpolated($"[green]Created storage account:[/] [blue] {stor.Value.Data.Name}[/]");
 
