@@ -1,14 +1,15 @@
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers().AddDapr();
+using Dapr.Client;
 
-// Configure and enable middlewares
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDaprClient();
+
 var app = builder.Build();
 app.UseCloudEvents();
 
-app.MapGet("/order", async (Dapr.Client.DaprClient client) =>
+app.MapGet("/order", async (DaprClient client) =>
     await client.GetStateAsync<Order>("statestore", "orders"));
 
-app.MapPost("/neworder", async (Order o, Dapr.Client.DaprClient client) =>
+app.MapPost("/neworder", async (Order o, DaprClient client) =>
 {
     await client.SaveStateAsync<Order>("statestore", "orders", o);
     return Results.Ok();

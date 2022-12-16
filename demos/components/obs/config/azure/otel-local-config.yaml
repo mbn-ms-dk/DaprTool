@@ -1,7 +1,7 @@
 ﻿receivers:
-  zipkin: 
+  zipkin:
 extensions:
-  health_check: 
+  health_check:
   pprof:
     endpoint: :1888
   zpages:
@@ -15,14 +15,13 @@ exporters:
     maxbatchsize: 5
 service:
   extensions:
-  - pprof
-  - zpages
-  - health_check
+    - pprof
+    - zpages
+    - health_check
   pipelines:
     traces:
       receivers:
-      - zipkin
+        - zipkin
       exporters:
-      - azuremonitor
-      - logging
-
+        - azuremonitor
+        - logging

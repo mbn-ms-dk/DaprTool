@@ -3,12 +3,12 @@ kind: Component
 metadata:
   name: pubsub1
 auth:
-  secretStore: strongbox  
+  secretStore: strongbox
 spec:
   type: pubsub.azure.servicebus
   version: v1
   metadata:
-  - name: connectionString
-    secretKeyRef:
-      key: serviceBusEndpoint
-      name: serviceBusEndpoint
+    - name: connectionString
+      secretKeyRef:
+        key: serviceBusEndpoint
+        name: serviceBusEndpoint

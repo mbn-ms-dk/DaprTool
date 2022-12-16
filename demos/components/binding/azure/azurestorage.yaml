@@ -8,17 +8,17 @@ spec:
   type: bindings.azure.blobstorage
   version: v1
   metadata:
-  - name: storageAccount
-    secretKeyRef:
-      key: acct
-      name: acct
-  - name: storageAccessKey
-    secretKeyRef:
-      key: key
-      name: key
-  - name: container
-    value: container1
-  - name: decodeBase64
-    value: false
-  - name: getBlobRetryCount
-    value: 3
+    - name: storageAccount
+      secretKeyRef:
+        key: acct
+        name: acct
+    - name: storageAccessKey
+      secretKeyRef:
+        key: key
+        name: key
+    - name: container
+      value: container1
+    - name: decodeBase64
+      value: false
+    - name: getBlobRetryCount
+      value: 3

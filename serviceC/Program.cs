@@ -1,7 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers().AddDapr();
+builder.Services.AddDaprClient();
 
-// Configure and enable middlewares
 var app = builder.Build();
 app.UseCloudEvents();
 app.UseRouting();

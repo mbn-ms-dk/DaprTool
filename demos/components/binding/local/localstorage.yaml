@@ -6,5 +6,5 @@ spec:
   type: bindings.localstorage
   version: v1
   metadata:
-  - name: rootPath
-    value: "./tempfiles/"
+    - name: rootPath
+      value: "./tempfiles/"

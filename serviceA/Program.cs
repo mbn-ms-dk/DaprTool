@@ -1,13 +1,14 @@
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers().AddDapr();
+using Dapr.Client;
 
-// Configure and enable middlewares
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDaprClient();
+
 var app = builder.Build();
 app.UseCloudEvents();
 app.UseRouting();
 app.UseEndpoints(endpoints => endpoints.MapSubscribeHandler());
 
-app.MapPost("/incomingorders", async (Order o, Dapr.Client.DaprClient client) =>
+app.MapPost("/incomingorders", async (Order o, DaprClient client) =>
 {
     app.Logger.LogInformation("order received");
     app.Logger.LogInformation("calling serviceB");

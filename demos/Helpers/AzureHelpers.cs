@@ -4,8 +4,6 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using demos.Models;
 using Spectre.Console;
-using System.Dynamic;
-using System.Runtime.InteropServices;
 
 namespace demos.Helpers
 {
@@ -30,7 +28,7 @@ namespace demos.Helpers
 
         public static async Task<SubscriptionResource> Authenticate(string tenantId)
         {
-            SubscriptionResource sub = null;
+            SubscriptionResource sub = default;
             //authenticate
             await AnsiConsole.Status()
                 .SpinnerStyle(Style.Parse("blue"))
@@ -218,7 +216,7 @@ namespace demos.Helpers
                     await client.GetResourceGroupResource(rg.Value.Id).DeleteAsync(Azure.WaitUntil.Completed);
                     AnsiConsole.MarkupLine($"[green]Resource Group deleted[/]");
                 });
-            
+
         }
     }
 }

@@ -1,14 +1,14 @@
 ﻿name: observability
 
 services:
-- name: serviceA
-  executable: dapr
-  args: run -a serviceA -p 5000 -H 3500 -- dotnet ./serviceA.dll --urls "http://localhost:5000"
+  - name: serviceA
+    executable: dapr
+    args: run -a serviceA -p 5000 -H 3500 -- dotnet ./serviceA.dll --urls "http://localhost:5000"
 
-- name: serviceB
-  executable: dapr
-  args: run -a serviceB -p 5010 -- dotnet ./serviceB.dll --urls "http://localhost:5010"
+  - name: serviceB
+    executable: dapr
+    args: run -a serviceB -p 5010 -- dotnet ./serviceB.dll --urls "http://localhost:5010"
 
-- name: serviceC
-  executable: dapr
-  args: run -a serviceC -p 5020 -- dotnet ./serviceC.dll --urls "http://localhost:5020"
+  - name: serviceC
+    executable: dapr
+    args: run -a serviceC -p 5020 -- dotnet ./serviceC.dll --urls "http://localhost:5020"

@@ -7,4 +7,4 @@ spec:
   route: /neworder
   pubsubname: pubsub2
 scopes:
-- app1
+  - app1

@@ -3,22 +3,22 @@ kind: Component
 metadata:
   name: pubsub2
 auth:
-  secretStore: strongbox    
+  secretStore: strongbox
 spec:
   type: pubsub.azure.eventhubs
   version: v1
   metadata:
-  - name: connectionString
-    secretKeyRef:
-      key: eventHubsEndpoint
-      name: eventHubsEndpoint
-  - name: storageAccountName
-    secretKeyRef:
-      key: storageAccountName
-      name: storageAccountName
-  - name: storageAccountKey
-    secretKeyRef:
-      key: storageAccountKey
-      name: storageAccountKey
-  - name: storageContainerName
-    value: "neworder"
+    - name: connectionString
+      secretKeyRef:
+        key: eventHubsEndpoint
+        name: eventHubsEndpoint
+    - name: storageAccountName
+      secretKeyRef:
+        key: storageAccountName
+        name: storageAccountName
+    - name: storageAccountKey
+      secretKeyRef:
+        key: storageAccountKey
+        name: storageAccountKey
+    - name: storageContainerName
+      value: "neworder"
