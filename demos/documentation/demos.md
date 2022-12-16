@@ -190,7 +190,7 @@ This demo showcases the option to run locally against _Redis_ and in cloud again
 
 The component configuration is as following:
 
-**local**
+__local__
 
 Created with the file _state.redis.yaml_
 
@@ -211,9 +211,9 @@ spec:
     value: "true"
 ```
 
-**Azure**
+__Azure__
 
-When using the `--deploy` options a local file ( _local_secrets.json_ ) is created to be injected in to the yaml configuration of the component. Here the url and the key for the created _Azure CosmosDB_ will be stored.
+When using the `--deploy` options a local file ( _local_secrets.json_ ) is created to be injected in to the yaml configuration of the component. Here the URL and the key for the created _Azure CosmosDB_ will be stored.
 
 ![Image of json file](/demos/documentation/images/demos_dapr_state_azure_json.png)
 
@@ -261,11 +261,11 @@ spec:
 
 #### Binding Demo Description
 
-This demo showcases the option to run locally against a file folder and in cloud against _Azure Storage.
+This demo showcases the option to run locally against a file folder and in cloud against _Azure Storage_.
 
 ![Image showing service diagram](/demos/documentation/images/demos_dapr_binding.png)
 
-**local**
+__local__
 
 Created with the _localstorage.yaml_ file, using a relative path _./tempfiles/_
 
@@ -282,7 +282,7 @@ spec:
     value: "./tempfiles/"
 ```
 
-**Azure**
+__Azure__
 
 When using the `--deploy` options a local file ( _local_secrets.json_ ) is created to be injected in to the yaml configuration of the component. Here the key and the storage account name for the created _Azure Storage_ will be stored.
 
@@ -338,7 +338,7 @@ This demo showcases the option to run locally against _Redis_ both as a state st
 
 ![Image showing the different services](/demos/documentation/images/demos_dapr_pubsub.png)
 
-**local**
+__local__
 
 Running locally the state store file, _statestore.yaml_ is as follows
 
@@ -395,7 +395,7 @@ scopes:
 
 Same setup applies for pubsub service 2, except the pubsubname in the subscription file is _pubsub2_.
 
-**Azure**
+__Azure__
 
 When using the `--deploy` options a local file ( _local_secrets.json_ ) is created to be injected in to the yaml configuration of the component. In this file the following are added:
 
@@ -527,7 +527,7 @@ This demo is configured to use [Azure Key Vault](https://docs.dapr.io/reference/
 
 ![Image showing service diagram](/demos/documentation/images/demos_dapr_secrets.png)
 
-**local**
+__local__
 
 Running locally there is a _local_secrets.json_ file which is the secret.
 
@@ -553,10 +553,10 @@ spec:
     value: "./components/secrets/local/local_secrets.json"
 ```
 
-**Azure**
+__Azure__
 
-When using the `--deploy` options a local file ( _local_secrets.json_ ) is created to be injected in to the yaml configuration of the component. In this process a Service principal is created to manage the access to _Azure Keyvault_.
-The _local_secrets.json_ file is populated with service principal information as well as the keyvault name and tenant id.
+When using the `--deploy` options a local file ( _local_secrets.json_ ) is created to be injected in to the yaml configuration of the component. In this process a Service principal is created to manage the access to _Azure Key Vault_.
+The _local_secrets.json_ file is populated with service principal information as well as the key vault name and tenant ID.
 
 ![Image of json file](/demos/documentation/images/demos_dapr_secrets_azure_json.png)
 
@@ -608,15 +608,19 @@ spec:
 
 #### Observability Demo Description
 
-This demo contains three services, Service A, B, and C. Service A subscribes to the **PubSub** component. When a new order is received (1) Service A calls Service B using service to service invocation (2). When Service A gets a response from Service B, Service A stores the processed order using the **StateStore** component (3). Finally, Service A publishes the order to the **PubSub** component where Service C reads it (4).
+This demo contains three services, Service A, B, and C.
+Service A subscribes to the __PubSub__ component.
+When a new order is received (1) Service A calls Service B using service to service invocation (2).
+When Service A gets a response from Service B, Service A stores the processed order using the __StateStore__ component (3).
+Finally, Service A publishes the order to the __PubSub__ component where Service C reads it (4).
 
 ![Image showing service diagram](/demos/documentation/images/Services.png)
 
-Furthermore this demo contains a _otel-local-config.yaml_ file that contains the configuration for the [Open Telemetry Collector used to send the data to Application Insights](https://docs.dapr.io/operations/monitoring/tracing/open-telemetry-collector-appinsights/). The Open Telemetry Collector is run in a local container. When the demo is running locally the telemetry is send to the _dapr_zipkin_ container this is installed during `dapr init` and can be viewed at http://localhost:9411/zipkin/
+Furthermore this demo contains a _otel-local-config.yaml_ file that contains the configuration for the [Open Telemetry Collector used to send the data to Application Insights](https://docs.dapr.io/operations/monitoring/tracing/open-telemetry-collector-appinsights/). The Open Telemetry Collector is run in a local container. When the demo is running locally the telemetry is send to the _dapr_zipkin_ container this is installed during `dapr init` and can be viewed at <http://localhost:9411/zipkin/>
 
 This demo also contains the option to run dapr with [Microsoft Tye](https://github.com/dotnet/tye) and the option is `----useTye`
 
-**local**
+__local__
 
 The _tye_local.yaml_ file
 
@@ -637,7 +641,7 @@ services:
   args: run -a serviceC -p 5020 -- dotnet ./serviceC.dll --urls "http://localhost:5020"
 ```
 
-**Azure**
+__Azure__
 
 The _tye_cloud.yaml_ file
 

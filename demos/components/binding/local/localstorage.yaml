@@ -8,4 +8,4 @@ spec:
   version: v1
   metadata:
     - name: rootPath
-      value: "./tempfiles/"
+      value: ./tempfiles/
