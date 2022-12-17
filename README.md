@@ -6,4 +6,5 @@ The tool is created as a [.NET Tool](https://learn.microsoft.com/en-us/dotnet/co
 There are probably errors and other _interesting_ experiences, but have fun :)
 
 **Contributors**
+
 [ondfisk](https://github.com/ondfisk)
