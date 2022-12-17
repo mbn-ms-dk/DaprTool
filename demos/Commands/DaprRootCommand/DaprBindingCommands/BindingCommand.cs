@@ -48,9 +48,13 @@ public class BindingCommand : Command
                 await CreateStorageAccount(rg);
             }
             else if (delete)
+            {
                 await Helpers.AzureHelpers.DeleteResourceGroup(rgName);
+            }
             else if (describe)
+            {
                 Helpers.Utils.ShowDemoDescription(Helpers.DaprType.Binding);
+            }
             else
             {
                 if (demo && !deploy)
