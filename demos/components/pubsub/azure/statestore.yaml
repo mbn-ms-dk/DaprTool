@@ -1,3 +1,4 @@
+---
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
@@ -8,7 +9,7 @@ spec:
   type: state.sqlserver
   version: v1
   metadata:
-  - name: connectionString
-    secretKeyRef:
-      key: sqlConnectionString
-      name: sqlConnectionString
+    - name: connectionString
+      secretKeyRef:
+        key: sqlConnectionString
+        name: sqlConnectionString

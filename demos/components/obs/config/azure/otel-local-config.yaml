@@ -1,7 +1,8 @@
-﻿receivers:
-  zipkin: 
+﻿---
+receivers:
+  zipkin:
 extensions:
-  health_check: 
+  health_check:
   pprof:
     endpoint: :1888
   zpages:
@@ -10,19 +11,18 @@ exporters:
   logging:
     loglevel: debug
   azuremonitor:
-    instrumentation_key: 
+    instrumentation_key:
     maxbatchinterval: 5s
     maxbatchsize: 5
 service:
   extensions:
-  - pprof
-  - zpages
-  - health_check
+    - pprof
+    - zpages
+    - health_check
   pipelines:
     traces:
       receivers:
-      - zipkin
+        - zipkin
       exporters:
-      - azuremonitor
-      - logging
-
+        - azuremonitor
+        - logging

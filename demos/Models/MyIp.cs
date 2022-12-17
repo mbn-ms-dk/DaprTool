@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
-namespace demos.Models
+namespace demos.Models;
+
+public class MyIp
 {
-    public  class MyIp
-    {
-        [property: JsonPropertyName("ip")]
-        public string MyIpAddress { get; set; }
-        [property: JsonPropertyName("country")]
-        public string? Country { get; set; }
-        [property: JsonPropertyName("cc")]
-        public string? CountryCode { get; set; }
-    }
+    [JsonPropertyName("ip")]
+    public string MyIpAddress { get; set; }
+
+    [JsonPropertyName("country")]
+    public string? Country { get; set; }
+
+    [JsonPropertyName("cc")]
+    public string? CountryCode { get; set; }
 }

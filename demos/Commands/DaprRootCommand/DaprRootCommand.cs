@@ -5,17 +5,16 @@ using demos.Commands.DaprRootCommand.DaprSecretsCommands;
 using demos.Commands.DaprRootCommand.DaprStatestoreCommands;
 using System.CommandLine;
 
-namespace demos.Commands.DaprRootCommand
+namespace demos.Commands.DaprRootCommand;
+
+public class DaprRootCommand : Command
 {
-    public class DaprRootCommand : Command
+    public DaprRootCommand() : base("dapr", "Collection of available Dapr demos")
     {
-        public DaprRootCommand() : base("dapr", "Collection of available Dapr demos")
-        {
-            AddCommand(new StatestoreCommand());
-            AddCommand(new BindingCommand());
-            AddCommand(new PubSubCommand());
-            AddCommand(new SecretsCommand());
-            AddCommand(new ObservabilityCommand());
-        }
+        AddCommand(new StatestoreCommand());
+        AddCommand(new BindingCommand());
+        AddCommand(new PubSubCommand());
+        AddCommand(new SecretsCommand());
+        AddCommand(new ObservabilityCommand());
     }
 }
