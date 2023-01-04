@@ -92,7 +92,7 @@ These will be described in the following sections.
 
 ### user command
 
-The user command will shop the options in regard to authenticating your user against Azure. It will per default use the default azure profile for your user using [Azure.Identity](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
+The user command will show the options in regard to authenticating your user against Azure. It will per default use the default azure profile for your user using [Azure.Identity](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
 The __user__ command does not have any subcommands, but it have some options which can be shown this way:
 
 ```bash
