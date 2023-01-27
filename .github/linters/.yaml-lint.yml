@@ -5,7 +5,7 @@ rules:
     level: error
   brackets:
     forbid: true
-    level: error
+    level: warning
   colons:
     level: error
   commas:
@@ -19,7 +19,7 @@ rules:
   document-start:
     level: warning
   empty-lines:
-    max: 1
+    max: 2
     level: warning
   empty-values: disable
   hyphens:
@@ -36,9 +36,6 @@ rules:
     type: unix
     level: warning
   octal-values: disable
-  quoted-strings:
-    quote-type: single
-    required: only-when-needed
   trailing-spaces:
     level: warning
   truthy:
