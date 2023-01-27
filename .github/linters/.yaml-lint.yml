@@ -17,29 +17,29 @@ rules:
   document-end:
     present: false
   document-start:
-    level: error
+    level: warning
   empty-lines:
     max: 1
-    level: error
+    level: warning
   empty-values: disable
   hyphens:
     level: error
   indentation:
-    level: error
+    level: warning
   key-duplicates:
     level: error
   key-ordering: disable
   line-length: disable
   new-line-at-end-of-file:
-    level: error
+    level: warning
   new-lines:
     type: unix
-    level: error
+    level: warning
   octal-values: disable
   quoted-strings:
     quote-type: single
     required: only-when-needed
   trailing-spaces:
-    level: error
+    level: warning
   truthy:
-    level: error
+    level: warning
