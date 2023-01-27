@@ -8,3 +8,6 @@ There are probably errors and other _interesting_ experiences, but have fun :)
 **Contributors**
 
 [ondfisk](https://github.com/ondfisk)
+
+
+[![GitHub Super-Linter](https://github.com/mbn-ms-dk/DaprTool/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
