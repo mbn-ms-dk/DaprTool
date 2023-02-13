@@ -158,7 +158,7 @@
     <PackageReference Include="Azure.ResourceManager" Version="1.4.0" />
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" Version="1.0.0-beta.1" />
     <PackageReference Include="Azure.ResourceManager.AppService" Version="1.0.0" />
-    <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.2.0" />
+    <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.2.1" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Insights" Version="1.0.0-preview.1" />
     <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.0.0" />
