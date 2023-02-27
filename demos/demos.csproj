@@ -161,7 +161,7 @@
     <PackageReference Include="Azure.ResourceManager.CosmosDB" Version="1.2.1" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Insights" Version="1.0.0-preview.1" />
-    <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" Version="1.1.0" />
     <PackageReference Include="Azure.ResourceManager.Monitor" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Network" Version="1.1.0" />
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" Version="1.1.0" />
