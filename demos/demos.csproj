@@ -153,6 +153,7 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <PackageReference Include="Azure.Core" Version="1.43.0" />
     <PackageReference Include="Azure.Identity" Version="1.12.0" />
     <PackageReference Include="Azure.ResourceManager" Version="1.13.0" />
